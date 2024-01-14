@@ -3,14 +3,14 @@ import java.io.IOException;
 public class BattleField{
     Cell[][] board = new Cell[10][10];
 
-    public void setCells(){
+    void setCells(){
         for(int i = 0; i < 10; ++i) {
             for(int j = 0; j < 10; ++j){
                 board[i][j] = new Cell();
             }
         }
     }
-    public void showMyBoard() throws IOException {
+    void showMyBoard(){
         System.out.println("   -----------------------------------------");
         System.out.println("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |");
         for(int i = 0; i < 10; ++i){
@@ -29,7 +29,7 @@ public class BattleField{
         }
     }
 
-    public void showForOpponent(){
+    void showForOpponent(){
         System.out.println("--------------------------------------------");
         System.out.println("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |");
         for(int i = 0; i < 10; ++i){
@@ -45,7 +45,7 @@ public class BattleField{
         }
     }
 
-    public boolean checkOutOfBoard(int n){
+    boolean checkOutOfBoard(int n){
         if(n>9 || n<0) return true;
         return false;
     }

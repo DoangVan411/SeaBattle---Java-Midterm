@@ -3,15 +3,15 @@ import java.util.Scanner;
 public class Ship extends Player{
 
     private boolean isSink = false;
-    private int numberOfCellleft;
+    private int numberOfCellsLeft;
     private int x_begin, y_begin, x_end, y_end;
 
-    public int getNumberOfCellleft() {
-        return numberOfCellleft;
+    public int getNumberOfCellsLeft() {
+        return numberOfCellsLeft;
     }
 
     public void setNumberOfCellleft(int numberOfCellleft) {
-        this.numberOfCellleft = numberOfCellleft;
+        this.numberOfCellsLeft = numberOfCellleft;
     }
 
     public int getX_begin() {
@@ -55,12 +55,12 @@ public class Ship extends Player{
     }
 
 
-    public Ship(int x_begin, int x_end, int y_begin, int y_end, int numberOfCellleft){
+    Ship(int x_begin, int x_end, int y_begin, int y_end, int numberOfCellleft){
         this.x_begin = x_begin;
         this.x_end = x_end;
         this.y_begin = y_begin;
         this.y_end = y_end;
-        this.numberOfCellleft = numberOfCellleft;
+        this.numberOfCellsLeft = numberOfCellleft;
     }
 
 

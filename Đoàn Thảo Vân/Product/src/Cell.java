@@ -1,15 +1,15 @@
 public class Cell {
     private String status;
 
-    public Cell(){
+    Cell(){
         this.status = "Empty";
     }
 
-    public String getStatus() {
+    String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    void setStatus(String status) {
         this.status = status;
     }
 }

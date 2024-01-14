@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player extends BattleField{
-    public int numberOfShipleft = 5;
+    private int numberOfShipLeft = 5;
 
     private int cellsAttacked = 0;
     private boolean win = false;
     Scanner sc = new Scanner(System.in);
 
     List<Ship> ships = new ArrayList<>();
-    public void setWin(boolean win) {
+    private void setWin(boolean win) {
         this.win = win;
     }
 
-    public boolean getWin(){
+    boolean getWin(){
         return win;
     }
-    public void chooseMode(Player me, Player opponent) throws IOException {
+    void chooseMode(Player me, Player opponent) throws IOException {
         System.out.println(Color.green + "Cells were attacked: " + cellsAttacked + Color.ANSI_Reset);
         System.out.println(Color.purple + "Number of opponent's ships destroyed: " + (5 - opponent.ships.size()) + Color.ANSI_Reset);
         System.out.println(Color.yellow + "Number of your ship now: " + me.ships.size() + Color.ANSI_Reset);
@@ -34,14 +34,14 @@ public class Player extends BattleField{
             else if(mode.equals("2")){
                 opponent.shot(opponent);
                 System.out.println("Press any key to end turn...");
-                String endturn = sc.nextLine();
+                String endTurn = sc.nextLine();
                 break;
             }
             else break;
         }
     }
 
-    public void shot(Player opponent) throws IOException {
+    private void shot(Player opponent) throws IOException {
         int x = 0, y = 0;
         boolean isAttacked = true, isOutOfRange = true;
         boolean continuousAttack = true;
@@ -89,31 +89,31 @@ public class Player extends BattleField{
 
     }
 
-    public void ifSink(int x, int y, Ship ship){
+    private void ifSink(int x, int y, Ship ship){
         if(ship.getX_begin() <= x && ship.getX_end() >= x && ship.getY_begin() <= y && ship.getY_end() >= y){
-            ship.setNumberOfCellleft(ship.getNumberOfCellleft() - 1);
+            ship.setNumberOfCellleft(ship.getNumberOfCellsLeft() - 1);
         }
-        if(ship.getNumberOfCellleft() == 0){
-            numberOfShipleft--;
+        if(ship.getNumberOfCellsLeft() == 0){
+            numberOfShipLeft--;
             ship.setSink(true);
             System.out.println("A ship was sink!");
         }
     }
-    public void checkWin(){
-        if(numberOfShipleft == 0){
+    private void checkWin(){
+        if(numberOfShipLeft == 0){
             System.out.println("You are the winner!");
             setWin(true);
         }
     }
 
-    static boolean placeSuccessfull = false, coincide = false;
-    public void place(int coverCells) throws IOException {
+    static boolean placeSuccessful = false, coincide = false;
+    private void place(int coverCells) throws IOException {
         System.out.println();
         showMyBoard();
         System.out.println();
         int x_begin = 0, y_begin = 0, x_end = 0, y_end = 0;
-        placeSuccessfull = false;
-        while(!placeSuccessfull)
+        placeSuccessful = false;
+        while(!placeSuccessful)
         {
             System.out.println("Enter the coordinates you want to place the ship: ");
             System.out.print("x = ");
@@ -147,7 +147,7 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = y; i > y-coverCells; --i) board[x][i].setStatus("P");
-                            placeSuccessfull = true;
+                            placeSuccessful = true;
                         }
                         else{
                             System.out.println("Try again");
@@ -169,7 +169,7 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = y; i < y+coverCells; ++i) board[x][i].setStatus("P");
-                            placeSuccessfull = true;
+                            placeSuccessful = true;
                         }
                         else{
                             System.out.println("Try again");
@@ -191,7 +191,7 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = x; i > x-coverCells; --i) board[i][y].setStatus("P");
-                            placeSuccessfull = true;
+                            placeSuccessful = true;
                         }
                         else{
                             System.out.println("Try again");
@@ -213,7 +213,7 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = x; i < x+coverCells; ++i) board[i][y].setStatus("P");
-                            placeSuccessfull = true;
+                            placeSuccessful = true;
                         }
                         else{
                             System.out.println("Try again");
@@ -231,7 +231,7 @@ public class Player extends BattleField{
         ships.add(newShip);
         ClearScreen.clrscr();
     }
-    public void placeShip() throws IOException {
+    void placeShip() throws IOException {
         setCells();
         System.out.println("1.Place First Patrol Boat (1x2)");
         place(2);
