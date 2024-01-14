@@ -22,11 +22,11 @@ The project was done by [Đoàn Thảo Vân](https://github.com/DoangVan411), in
 ### **Gameplay video:** [Link](https://www.youtube.com/watch?v=LyoxGfBo_h8)
 ### **Images**:
 
-![Alt text](C:\Users\dell\Documents\seabattle\image1.png)
-![Alt text](C:\Users\dell\Documents\seabattle\image2.png)
-![Alt text](C:\Users\dell\Documents\seabattle\image3.png)
-![Alt text](C:\Users\dell\Documents\seabattle\image4.png)
-![Alt text](C:\Users\dell\Documents\seabattle\image5.png)
+![Alt text](image1.png)
+![Alt text](image2.png)
+![Alt text](image3.png)
+![Alt text](image4.png)
+![Alt text](image5.png)
 
 
 ## Usage
@@ -48,10 +48,10 @@ The project was done by [Đoàn Thảo Vân](https://github.com/DoangVan411), in
 
 ## UML
 ### Class Diagram:
-![Alt text](C:\Users\dell\Documents\seabattle\UML.jpg)
+![Alt text](UML.jpg)
 
 ### Activity Diagram:
-![Alt text](C:\Users\dell\Documents\seabattle\ActivityDiagram.png)
+![Alt text](ActivityDiagram.png)
 
 ## Contributing
 
