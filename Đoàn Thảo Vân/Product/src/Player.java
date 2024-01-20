@@ -6,7 +6,9 @@ import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Scanner;
 
-public class Player extends BattleField{
+public class Player{
+
+    BattleField myGrid = new BattleField();
     private int numberOfShipLeft = 5;
 
     private int cellsAttacked = 0;
@@ -29,10 +31,10 @@ public class Player extends BattleField{
             ShowMenu.showMode();
             String mode = sc.nextLine();
             if(mode.equals("1")) {
-                me.showMyBoard();
+                myGrid.showMyBoard();
             }
             else if(mode.equals("2")){
-                opponent.shot(opponent);
+                opponent.shot();
                 System.out.println("Press any key to end turn...");
                 String endTurn = sc.nextLine();
                 break;
@@ -41,25 +43,25 @@ public class Player extends BattleField{
         }
     }
 
-    private void shot(Player opponent) throws IOException {
+    private void shot() throws IOException {
         int x = 0, y = 0;
         boolean isAttacked = true, isOutOfRange = true;
         boolean continuousAttack = true;
         while(isAttacked || isOutOfRange || continuousAttack)
         {
             ++cellsAttacked;
-            opponent.showForOpponent();
+            myGrid.showForOpponent();
             System.out.println("Enter the coordinates to shoot: ");
             System.out.print("x = ");
             x = Integer.valueOf(sc.nextLine());
             System.out.print("y = ");
             y = Integer.valueOf(sc.nextLine());
-            if(checkOutOfBoard(x) || checkOutOfBoard(y)){
+            if(myGrid.checkOutOfBoard(x) || myGrid.checkOutOfBoard(y)){
                 System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                 continue;
             }
             else isOutOfRange = false;
-            if(board[x][y].getStatus().equals("o") || board[x][y].getStatus().equals("x")){
+            if(myGrid.board[x][y].getStatus().equals("o") || myGrid.board[x][y].getStatus().equals("x")){
                 ClearScreen.clrscr();
                 System.out.println(Color.yellow + "You attacked this point before, enter the ordinates again." + Color.ANSI_Reset);
                 System.out.println();
@@ -68,13 +70,13 @@ public class Player extends BattleField{
             else isAttacked = false;
             while(continuousAttack){
                 ClearScreen.clrscr();
-                if(!board[x][y].getStatus().equals("Empty")){
+                if(!myGrid.board[x][y].getStatus().equals("Empty")){
                     System.out.println(Color.green + "CONGRATULATION!!" + Color.ANSI_Reset);
                     for(Ship ship: ships){
                         if(!ship.getSink()) ifSink(x, y, ship);
                         checkWin();
                     }
-                    board[x][y].setStatus("o");
+                    myGrid.board[x][y].setStatus("o");
                     System.out.println(Color.yellow + "Continue to attack..." + Color.ANSI_Reset);
                     System.out.println();
                     break;
@@ -82,7 +84,7 @@ public class Player extends BattleField{
                 else{
                     continuousAttack = false;
                     System.out.println("Missed!");
-                    board[x][y].setStatus("x");
+                    myGrid.board[x][y].setStatus("x");
                 }
             }
         }
@@ -109,7 +111,7 @@ public class Player extends BattleField{
     static boolean placeSuccessful = false, coincide = false;
     private void place(int coverCells) throws IOException {
         System.out.println();
-        showMyBoard();
+        myGrid.showMyBoard();
         System.out.println();
         int x_begin = 0, y_begin = 0, x_end = 0, y_end = 0;
         placeSuccessful = false;
@@ -120,7 +122,7 @@ public class Player extends BattleField{
             int x = Integer.valueOf(sc.nextLine());
             System.out.print("y = ");
             int y = Integer.valueOf(sc.nextLine());
-            if(checkOutOfBoard(x) || checkOutOfBoard(y)){
+            if(myGrid.checkOutOfBoard(x) || myGrid.checkOutOfBoard(y)){
                 System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                 continue;
             }
@@ -134,19 +136,19 @@ public class Player extends BattleField{
                 {
                     case 1:
                         x_begin = x; y_begin = y - coverCells; y_end = y; x_end = x;
-                        if(checkOutOfBoard(y-coverCells+1)){
+                        if(myGrid.checkOutOfBoard(y-coverCells+1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = y; i > y-coverCells; --i) {
-                            if(board[x][i].getStatus().equals("P")){
+                            if(myGrid.board[x][i].getStatus().equals("P")){
                                 System.out.println(Color.yellow + "There is already a ship at this location!" + Color.ANSI_Reset);
                                 coincide = true;
                                 break;
                             }
                         }
                         if(!coincide){
-                            for(int i = y; i > y-coverCells; --i) board[x][i].setStatus("P");
+                            for(int i = y; i > y-coverCells; --i) myGrid.board[x][i].setStatus("P");
                             placeSuccessful = true;
                         }
                         else{
@@ -156,19 +158,19 @@ public class Player extends BattleField{
                         break;
                     case 2:
                         x_begin = x; y_begin = y ; y_end = y + coverCells; x_end = x;
-                        if(checkOutOfBoard(y+coverCells-1)){
+                        if(myGrid.checkOutOfBoard(y+coverCells-1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = y; i < y+coverCells; ++i) {
-                            if(board[x][i].getStatus().equals("P")){
+                            if(myGrid.board[x][i].getStatus().equals("P")){
                                 System.out.println(Color.yellow + "There is already a ship at this location!" + Color.ANSI_Reset);
                                 coincide = true;
                                 break;
                             }
                         }
                         if(!coincide){
-                            for(int i = y; i < y+coverCells; ++i) board[x][i].setStatus("P");
+                            for(int i = y; i < y+coverCells; ++i) myGrid.board[x][i].setStatus("P");
                             placeSuccessful = true;
                         }
                         else{
@@ -178,19 +180,19 @@ public class Player extends BattleField{
                         break;
                     case 3:
                         x_begin = x - coverCells; y_begin = y; y_end = y; x_end = x;
-                        if(checkOutOfBoard(x-coverCells+1)){
+                        if(myGrid.checkOutOfBoard(x-coverCells+1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = x; i > x-coverCells; --i) {
-                            if(board[i][y].getStatus().equals("P")){
+                            if(myGrid.board[i][y].getStatus().equals("P")){
                                 System.out.println(Color.yellow + "There is already a ship at this location!" + Color.ANSI_Reset);
                                 coincide = true;
                                 break;
                             }
                         }
                         if(!coincide){
-                            for(int i = x; i > x-coverCells; --i) board[i][y].setStatus("P");
+                            for(int i = x; i > x-coverCells; --i) myGrid.board[i][y].setStatus("P");
                             placeSuccessful = true;
                         }
                         else{
@@ -200,19 +202,19 @@ public class Player extends BattleField{
                         break;
                     case 4:
                         x_begin = x; y_begin = y; y_end = y; x_end = x + coverCells;
-                        if(checkOutOfBoard(x+coverCells-1)){
+                        if(myGrid.checkOutOfBoard(x+coverCells-1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = x; i < x+coverCells; ++i) {
-                            if(board[i][y].getStatus().equals("P")){
+                            if(myGrid.board[i][y].getStatus().equals("P")){
                                 System.out.println(Color.yellow + "There is already a ship at this location!" + Color.ANSI_Reset);
                                 coincide = true;
                                 break;
                             }
                         }
                         if(!coincide){
-                            for(int i = x; i < x+coverCells; ++i) board[i][y].setStatus("P");
+                            for(int i = x; i < x+coverCells; ++i) myGrid.board[i][y].setStatus("P");
                             placeSuccessful = true;
                         }
                         else{
@@ -232,7 +234,7 @@ public class Player extends BattleField{
         ClearScreen.clrscr();
     }
     void placeShip() throws IOException {
-        setCells();
+        myGrid.setCells();
         System.out.println("1.Place First Patrol Boat (1x2)");
         place(2);
         System.out.println("2.Place Second Patrol Boat (1x2)");

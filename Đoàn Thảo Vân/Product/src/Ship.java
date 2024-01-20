@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Ship extends Player{
+public class Ship{
 
     private boolean isSink = false;
     private int numberOfCellsLeft;
